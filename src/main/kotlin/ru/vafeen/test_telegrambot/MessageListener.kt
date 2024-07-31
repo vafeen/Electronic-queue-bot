@@ -102,14 +102,20 @@ class MessageListener {
                 when {
                     (usersList.mapNotNull { it.username }).count {
                         it == message.getUsername()
-                    } == 0 && id < usersList.size -> {
+                    } == 0 && id < usersList.size && usersList[id] == null -> {
                         usersList[id] = (User(id = id, username = message.getUsername()))
                         SendMessage(chatID, placesStringMessage(usersList = usersList)).offKeyboard()
                     }
 
                     (usersList.mapNotNull { it.username }).count {
                         it == message.getUsername()
-                    } > 0 && id < usersList.size-> {
+                    } == 0 && id < usersList.size && usersList[id] != null -> {
+                        SendMessage(chatID, "Занято")
+                    }
+
+                    (usersList.mapNotNull { it.username }).count {
+                        it == message.getUsername()
+                    } > 0 && id < usersList.size -> {
                         SendMessage(chatID, "Поигрались и хватит)").offKeyboard()
                     }
 
