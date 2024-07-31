@@ -49,7 +49,7 @@ Following links are clickable:
 
 
 
-
+Based on https://github.com/vafeen/TelegramBotTemplate
 
 
 
