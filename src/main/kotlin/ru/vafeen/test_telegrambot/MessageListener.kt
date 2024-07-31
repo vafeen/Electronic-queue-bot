@@ -24,7 +24,7 @@ fun placesStringMessage(usersList: MutableList<User?>): String {
 
     usersList.forEachIndexed { index, user ->
         resultText += if (user != null) "\n$user"
-        else "\n$index. Пусто"
+        else "\n$index. Free"
     }
 
     return resultText
@@ -65,14 +65,10 @@ class MessageListener {
     fun processMessage(message: Message, sendMessage: (SendMessage) -> Unit) {
         val chatID = message.chatId.toString()
 
-        val messageForSend: SendMessage = when {
-//            Commands.START -> {
-//                SendMessage(chatID, "Привет, @${message.getUsername()}").offKeyboard()
-//            }
-
-            message.text == Commands.START -> {
+        val messageForSend: SendMessage = when (message.text) {
+            Commands.START -> {
                 val resultText =
-                    "Выберите место:\n" + placesStringMessage(usersList = usersList)
+                    "Choose a place:\n" + placesStringMessage(usersList = usersList)
                 val buttonsList = (1..numberOfStudents).toList().let { numberOfStudentsL ->
                     if (usersList.isNotEmpty())
                         usersList.mapNotNull {
@@ -89,7 +85,7 @@ class MessageListener {
                 ).withKeyboard(keyboard = createReplyKeyboardColumn(buttonsText = buttonsList))
             }
 
-            message.text == Commands.LIST -> {
+            Commands.LIST -> {
                 SendMessage(
                     chatID,
                     "See the queue:\n" + placesStringMessage(usersList = usersList)
@@ -110,17 +106,17 @@ class MessageListener {
                     (usersList.mapNotNull { it.username }).count {
                         it == message.getUsername()
                     } == 0 && id < usersList.size && usersList[id] != null -> {
-                        SendMessage(chatID, "Занято")
+                        SendMessage(chatID, "The place is taken")
                     }
 
                     (usersList.mapNotNull { it.username }).count {
                         it == message.getUsername()
                     } > 0 && id < usersList.size -> {
-                        SendMessage(chatID, "Поигрались и хватит)").offKeyboard()
+                        SendMessage(chatID, "Stop playing!").offKeyboard()
                     }
 
                     else -> {
-                        SendMessage(chatID, "Еще что придумаешь? Тебе кнопки для чего?")
+                        SendMessage(chatID, "What do you think about buttons?")
                     }
                 }
             }
