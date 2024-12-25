@@ -3,8 +3,7 @@
 This bot will help you to create a queue for something. Everyone who selects a place in the bot will be shown in the general list, which is visible to everyone.
 
 To start using bot you must have API key and add it in code,
-can override numberOfStudents on number of your persons 
-![image](https://github.com/user-attachments/assets/a5b3f002-d18b-427c-802f-47097bdf8ab0)
+can override numberOfStudents on number of your persons
 and enjoy how the bot will do your work for you)
 
 
